@@ -2,6 +2,8 @@ package com.api.parkingcontrol.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -9,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,5 +49,20 @@ public class ParkingSpotController {
     BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
     parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
     return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel));
+  }
+
+  @GetMapping()
+  public ResponseEntity<Object> getAllParkingSpots() {
+    return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll());
+  }
+
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Object> getOneParkingSpots(@PathVariable String id) {
+    Optional<ParkingSpotModel> parkingSpotFound = parkingSpotService.findById(UUID.fromString(id));
+    if(parkingSpotFound.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found: Parking Spot not found."); 
+    }
+    return ResponseEntity.status(HttpStatus.OK).body(parkingSpotFound);
   }
 }
