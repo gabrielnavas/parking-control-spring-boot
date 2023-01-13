@@ -58,8 +58,8 @@ public class ParkingSpotController {
 
 
   @GetMapping("/{id}")
-  public ResponseEntity<Object> getOneParkingSpots(@PathVariable String id) {
-    Optional<ParkingSpotModel> parkingSpotFound = parkingSpotService.findById(UUID.fromString(id));
+  public ResponseEntity<Object> getOneParkingSpot(@PathVariable UUID id) {
+    Optional<ParkingSpotModel> parkingSpotFound = parkingSpotService.findById(id);
     if(parkingSpotFound.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found: Parking Spot not found."); 
     }
