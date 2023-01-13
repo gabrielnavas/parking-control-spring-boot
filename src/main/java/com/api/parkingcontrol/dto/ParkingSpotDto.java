@@ -1,4 +1,4 @@
-package com.api.parkingcontrol;
+package com.api.parkingcontrol.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Sort;
 
-import com.api.parkingcontrol.ParkingSpotDto;
+import com.api.parkingcontrol.dto.ParkingSpotDto;
 import com.api.parkingcontrol.models.ParkingSpotModel;
 import com.api.parkingcontrol.services.ParkingSpotService;
 
@@ -70,7 +70,7 @@ public class ParkingSpotController {
     if(parkingSpotFound.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found: Parking Spot not found."); 
     }
-    return ResponseEntity.status(HttpStatus.OK).body(parkingSpotFound);
+    return ResponseEntity.status(HttpStatus.OK).body(parkingSpotFound.get());
   }
 
   @DeleteMapping("/{id}")
@@ -80,7 +80,7 @@ public class ParkingSpotController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found: Parking Spot not found."); 
     }
     parkingSpotService.delete(parkingSpotFound.get());
-    return ResponseEntity.status(HttpStatus.OK).body(parkingSpotFound);
+    return ResponseEntity.status(HttpStatus.OK).body(parkingSpotFound.get());
   }
 
   @PutMapping("/{id}")
